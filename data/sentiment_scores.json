@@ -1,0 +1,128 @@
+[
+  {
+    "name": "finbert/finbert",
+    "kind": "local",
+    "available": true,
+    "unavailable_reason": "",
+    "total": 60,
+    "accuracy": 0.6333333333333333,
+    "hard_accuracy": 0.47368421052631576,
+    "macro_f1": 0.6044475515163622,
+    "mean_latency_s": 0.05065070999965731,
+    "per_label": {
+      "POSITIVE": {
+        "precision": 0.6153846153846154,
+        "recall": 0.4444444444444444,
+        "f1": 0.5161290322580646,
+        "support": 18
+      },
+      "NEGATIVE": {
+        "precision": 0.7777777777777778,
+        "recall": 0.875,
+        "f1": 0.823529411764706,
+        "support": 24
+      },
+      "NEUTRAL": {
+        "precision": 0.45,
+        "recall": 0.5,
+        "f1": 0.4736842105263158,
+        "support": 18
+      }
+    },
+    "confusion": {
+      "NEGATIVE": {
+        "NEGATIVE": 21,
+        "NEUTRAL": 3
+      },
+      "POSITIVE": {
+        "NEUTRAL": 8,
+        "POSITIVE": 8,
+        "NEGATIVE": 2
+      },
+      "NEUTRAL": {
+        "NEGATIVE": 4,
+        "POSITIVE": 5,
+        "NEUTRAL": 9
+      }
+    }
+  },
+  {
+    "name": "ollama/qwen3:1.7b",
+    "kind": "local",
+    "available": false,
+    "unavailable_reason": "Ollama not reachable at http://localhost:11434 (<urlopen error [WinError 10061] No connection could be made because the target machine actively refused it>)",
+    "total": 0,
+    "accuracy": null,
+    "hard_accuracy": null,
+    "macro_f1": 0.0,
+    "mean_latency_s": null,
+    "per_label": {
+      "POSITIVE": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0
+      },
+      "NEGATIVE": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0
+      },
+      "NEUTRAL": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0
+      }
+    },
+    "confusion": {}
+  },
+  {
+    "name": "lexicon-baseline",
+    "kind": "baseline",
+    "available": true,
+    "unavailable_reason": "",
+    "total": 60,
+    "accuracy": 0.6333333333333333,
+    "hard_accuracy": 0.2631578947368421,
+    "macro_f1": 0.634018810776343,
+    "mean_latency_s": 0.0002877050001795093,
+    "per_label": {
+      "POSITIVE": {
+        "precision": 0.625,
+        "recall": 0.5555555555555556,
+        "f1": 0.5882352941176471,
+        "support": 18
+      },
+      "NEGATIVE": {
+        "precision": 0.9411764705882353,
+        "recall": 0.6666666666666666,
+        "f1": 0.7804878048780487,
+        "support": 24
+      },
+      "NEUTRAL": {
+        "precision": 0.4444444444444444,
+        "recall": 0.6666666666666666,
+        "f1": 0.5333333333333333,
+        "support": 18
+      }
+    },
+    "confusion": {
+      "NEGATIVE": {
+        "NEGATIVE": 16,
+        "NEUTRAL": 7,
+        "POSITIVE": 1
+      },
+      "POSITIVE": {
+        "POSITIVE": 10,
+        "NEUTRAL": 8
+      },
+      "NEUTRAL": {
+        "NEUTRAL": 12,
+        "POSITIVE": 5,
+        "NEGATIVE": 1
+      }
+    }
+  }
+]

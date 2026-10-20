@@ -1,0 +1,43 @@
+{
+  "model_type": "logistic",
+  "n_total": 185,
+  "n_train": 129,
+  "n_test": 56,
+  "train_positive_rate": 0.3333333333333333,
+  "test_positive_rate": 0.35714285714285715,
+  "split_timestamp": "2026-07-22 22:30:00+00:00",
+  "features": [
+    "rsi",
+    "atr_pct_of_price",
+    "ema_spread_pct",
+    "macd_hist_norm",
+    "bb_percent_b",
+    "close_vs_vwap_pct",
+    "cross_age",
+    "is_long",
+    "trend_agrees",
+    "rr"
+  ],
+  "train_accuracy": 0.5581395348837209,
+  "test_accuracy": 0.5535714285714286,
+  "test_auc": 0.5611111111111111,
+  "test_brier": 0.25869148678290627,
+  "baseline_brier": 0.23015873015873017,
+  "log_loss": 0.7269226824222156,
+  "coefficients": {
+    "rsi": 0.328702886175256,
+    "atr_pct_of_price": 0.055880380931245255,
+    "ema_spread_pct": 0.1294693555116691,
+    "macd_hist_norm": -0.11731079243773916,
+    "bb_percent_b": 0.19388955960198892,
+    "close_vs_vwap_pct": -0.5044576215255644,
+    "cross_age": 0.08498118507600518,
+    "is_long": -0.08758549640658325,
+    "trend_agrees": 0.0,
+    "rr": 0.0
+  },
+  "warnings": [
+    "only 185 labelled rows: coefficients are indicative, not reliable. Treat the confidence score as experimental."
+  ],
+  "beats_baseline": false
+}

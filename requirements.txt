@@ -1,0 +1,36 @@
+# --- Core runtime dependencies ---
+# Exchange abstraction: public/read-only market data only. No private keys,
+# no trading calls, no account endpoints.
+ccxt>=4.4.0
+
+# Dataframes + numerics for the indicator and backtest engines.
+pandas>=2.2.0
+numpy>=1.26.0
+
+# Local persistence (SQLite via SQLAlchemy ORM).
+SQLAlchemy>=2.0.30
+
+# Confidence calibration: logistic regression / small gradient boosting.
+# This is the ONLY trained model in the project, and it is deliberately not
+# an LLM. See README "Open Decisions".
+scikit-learn>=1.5.0
+
+# --- Test dependencies ---
+pytest>=8.0.0
+
+# --- Optional: sentiment track (bake-off candidate #4) ---
+# Needed only to run app/news/sentiment.py's FinBertSentiment classifier and
+# evaluation/sentiment_bakeoff.py. Everything else works without them, and
+# the classifier reports itself unavailable rather than failing.
+#   pip install transformers torch --index-url https://download.pytorch.org/whl/cpu
+# transformers>=4.44.0
+# torch>=2.4.0
+
+# --- Deliberately NOT included ---
+# pandas-ta / TA-Lib : indicators are implemented in-house in app/indicators/
+#                      so every calculation is unit-testable, and because
+#                      pandas-ta breaks on numpy>=2 / pandas>=3 (OD-1).
+# anthropic / openai : the LLM providers use urllib against the public HTTP
+#                      APIs, so no vendor SDK is required. Keys are read from
+#                      the environment at call time, never stored.
+# feedparser         : no news collector yet (roadmap Phase 6).

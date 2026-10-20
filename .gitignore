@@ -1,0 +1,19 @@
+# virtualenv
+.venv/
+venv/
+
+# python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+
+# local data: databases, cached history, generated datasets
+data/*.db
+data/historical/
+data/_test_cache/
+
+# never commit credentials of any kind
+.env
+*.key
+secrets.*
