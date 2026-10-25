@@ -1,6 +1,6 @@
 # AI Crypto Trading Agent
 
-![Trader agent](trader-agent.png)
+![Trader agent](docs/images/trader-agent.png)
 
 A rule-based crypto trading agent with an optional LLM review layer.
 **Paper trading only.** There are no exchange credentials in this repository
@@ -8,6 +8,16 @@ and no code path that can place a real order.
 
 Target venues: **LBank / Toobit, USDT-M futures**.
 Default data source: **Toobit** (chosen by measurement — see [Data sources](#data-sources)).
+
+<p align="center">
+  <img src="docs/images/pipeline.jpg" alt="Decision pipeline: market data → indicators → strategy → risk → paper trading" width="860" />
+</p>
+
+<p align="center">
+  <img src="docs/images/strategy-gates.jpg" alt="Three strategy gates: EMA cross, RSI window, market structure" width="420" />
+  &nbsp;
+  <img src="docs/images/paper-trading-demo.jpg" alt="Paper trading loop terminal demo" width="420" />
+</p>
 
 ---
 
@@ -60,12 +70,6 @@ Useful flags:
 | `--balance 10000` | starting virtual balance |
 | `--close-at-end` | mark open positions to market when the run ends |
 
-Run the tests:
-
-```bash
-.venv/Scripts/python.exe -m pytest
-```
-
 ### Offline analysis
 
 Generate the labelled dataset (fetches history, replays it, writes
@@ -92,6 +96,64 @@ Score sentiment classifiers (the separate track):
 ```bash
 .venv/Scripts/python.exe -m evaluation.sentiment_bakeoff
 ```
+
+---
+
+## Tests
+
+**352 tests**, all offline — no network, no exchange credentials, fake ccxt
+clients only (`tests/conftest.py`).
+
+```bash
+.venv/Scripts/python.exe -m pytest
+```
+
+Useful variants:
+
+```bash
+.venv/Scripts/python.exe -m pytest -v                 # one line per test
+.venv/Scripts/python.exe -m pytest tests/test_strategy.py
+.venv/Scripts/python.exe -m pytest -k "rsi or atr"    # filter by name
+.venv/Scripts/python.exe -m pytest --collect-only -q  # list without running
+```
+
+| File | Count | What it covers |
+|---|---:|---|
+| `tests/test_indicators.py` | 44 | EMA SMA RSI ATR MACD Bollinger VWAP (RSI vs Wilder's published example) |
+| `tests/test_llm_layer.py` | 47 | Strict schema, one-way veto, failure fallback |
+| `tests/test_data_feed.py` | 37 | Read-only tripwire, retries, candle trimming |
+| `tests/test_paper_trading.py` | 33 | Fills, fees, stop/target, ambiguous-candle → STOP |
+| `tests/test_confidence.py` | 33 | Temporal-split calibration, no leakage |
+| `tests/test_risk.py` | 32 | ATR levels, position sizing, daily ledger |
+| `tests/test_strategy.py` | 30 | Three gates, reasons, invalidation on every signal |
+| `tests/test_correlation.py` | 29 | Clusters and per-cluster caps |
+| `tests/test_database.py` | 29 | SQLAlchemy models / repository |
+| `tests/test_backtesting.py` | 26 | Causal replay, labelled outcomes |
+| `tests/test_market_structure.py` | 12 | Fractal swings → UP / DOWN / RANGE |
+
+Config: `pytest.ini` (`testpaths = tests`, warnings as errors for
+`DeprecationWarning`).
+
+---
+
+## Examples
+
+Self-contained demos under [`examples/`](examples/) — synthetic data only,
+no exchange calls:
+
+```bash
+.venv/Scripts/python.exe examples/01_indicators.py
+.venv/Scripts/python.exe examples/02_strategy_signal.py
+.venv/Scripts/python.exe examples/03_paper_trade.py
+```
+
+| Script | Output |
+|---|---|
+| `01_indicators.py` | Last-candle EMA / RSI / ATR / MACD / Bollinger %B |
+| `02_strategy_signal.py` | `LONG` with all three gate reasons named |
+| `03_paper_trade.py` | Sized entry → take-profit fill → wallet PnL |
+
+See [`examples/README.md`](examples/README.md).
 
 ---
 
@@ -297,8 +359,9 @@ app/
   database/         SQLAlchemy models + repository
   orchestrator.py   the single-process loop
 evaluation/         bake-off, backtest runner, calibration trainer
+examples/           offline demos (indicators, strategy, paper trade)
 tests/              352 tests, no network access
-docs/               architecture + results
+docs/               architecture + results + images/
 main.py
 ```
 
